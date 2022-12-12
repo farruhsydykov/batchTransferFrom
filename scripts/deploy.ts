@@ -13,8 +13,6 @@ async function main() {
   const deployDataString = await fs.readFileSync(networkFile, "utf-8");
   const deployData = JSON.parse(deployDataString);
 
-  console.log(deployData)
-
   const Contract = await ethers.getContractFactory("BatchTransferFrom");
   const contract = await Contract.deploy({nonce: nonce});
 

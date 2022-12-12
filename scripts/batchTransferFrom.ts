@@ -14,15 +14,14 @@ async function main() {
     const backupJSON = await fs.readFileSync(networkFile, "utf-8");
     const backup = JSON.parse(backupJSON);
 
-    console.log(backup)
-
     if (!backup.address) {
-        console.log(`${networkFile} IS NOT FILLED PROPERLY\n
-            Make sure you have deployed your contract or fill the backup file...`)
+        console.log(
+            `${networkFile}\n
+            IS NOT FILLED PROPERLY\n
+            Make sure you have deployed your contract or fill the backup file...`
+        )
         return
     }
-
-    console.log("here?")
 
     const Contract = await ethers.getContractFactory("BatchTransferFrom");
     const contract = new ethers.Contract(`${backup.address}`, Contract.interface, deployer);
@@ -30,7 +29,7 @@ async function main() {
     const tx = await contract.batchTransferFrom(args.contracts, args.from, args.to, {nonce})    
     await tx.wait()
 
-    console.log(`network: ${network.name}\ndeplyer: ${deployer.address}\ndeployed to: ${contract.address}`)
+    console.log(`Call success`)
 
 }
 
