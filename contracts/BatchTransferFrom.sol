@@ -38,11 +38,11 @@ contract BatchTransferFrom {
         }
     }
 
-    function _checkOwner() internal view virtual {
-        require(owner() == msg.sender, "Ownable: caller is not the owner");
-    }
-
     function _transferOwnership(address newOwner) internal virtual {
         _owner = newOwner;
+    }
+
+    function _checkOwner() internal view virtual {
+        require(owner() == msg.sender, "Ownable: caller is not the owner");
     }
 }

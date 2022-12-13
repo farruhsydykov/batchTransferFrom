@@ -9,19 +9,13 @@ const config: HardhatUserConfig = {
     goerli: {
       url: `https://eth-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY_GOERLI}`,
       chainId: 5,
-      accounts: {
-        count: 5,
-        mnemonic: `${process.env.MNEMONIC}`
-      }
+      accounts: [`${process.env.PRIVATE_KEY}`]
     },
 
     mainnet: {
       url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY_MAINNET}`,
       chainId: 1,
-      accounts: {
-        count: 1,
-        mnemonic: `${process.env.MNEMONIC}`
-      }
+      accounts: [`${process.env.PRIVATE_KEY}`]
     },
   },
   etherscan: {

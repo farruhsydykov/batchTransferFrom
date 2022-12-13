@@ -1,15 +1,16 @@
 import { ethers } from "hardhat";
+require("dotenv").config();
 import hre from "hardhat";
 import fs from "fs";
 
 async function main() {
   const provider = hre.ethers.provider;
   const network = await provider.getNetwork();
-  const [ deployer ] = await hre.ethers.getSigners();
+  const deployer = new ethers.Wallet(`${process.env.PRIVATE_KEY}`, provider);
 
   const nonce = await deployer.getTransactionCount();
   const networkFile = `./deployData-${network.name}.json`;
-  
+
   const deployDataString = await fs.readFileSync(networkFile, "utf-8");
   const deployData = JSON.parse(deployDataString);
 
@@ -18,9 +19,8 @@ async function main() {
 
   await contract.deployed();
 
-  console.log(`network: ${network.name}\ndeplyer: ${deployer.address}\ndeployed to: ${contract.address}`);
+  console.log(`network: ${network.name}\ndeployer: ${deployer.address}\ndeployed to: ${contract.address}`);
   
-  deployData.deployer = deployer.address
   deployData.address = contract.address
 
   await fs.writeFileSync(networkFile, JSON.stringify(deployData))
